@@ -25,8 +25,7 @@ public class BooksSrch extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rclevu);
 
-        Utility util = new Utility();
-        books = util.getAllBooks();
+        books = Utility.getAllBooks();
 
         BookAdpater adpater = new BookAdpater(this, books);
         recyclerView.setAdapter(adpater);

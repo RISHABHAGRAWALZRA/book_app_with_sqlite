@@ -20,8 +20,7 @@ public class BookAlreadyread extends AppCompatActivity {
 
         recyclerView=findViewById(R.id.recylvu);
 
-        Utility util=new Utility();
-        ArrayList<book> books=util.getAlreadyReadBooks();
+        ArrayList<book> books=Utility.getAlreadyReadBooks();
 
         BookAdpater adpater=new BookAdpater(this,books);
         adpater.setType("already");

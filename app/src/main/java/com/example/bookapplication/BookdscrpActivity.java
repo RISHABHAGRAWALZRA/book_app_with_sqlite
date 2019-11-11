@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,9 @@ public class BookdscrpActivity extends AppCompatActivity {
     ImageView imgbk;
     Button want, already, currrent;
     private book c;
+
+    private SQLite sqLite=Utility.getSqLite();
+    private SQLiteDatabase db=Utility.getDb();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +49,12 @@ public class BookdscrpActivity extends AppCompatActivity {
         int id = intent.getIntExtra("BookId", 0);
 
 
-        final Utility util = new Utility();
 
-        ArrayList<book> books = util.getAllBooks();
-        final ArrayList<book> cbook = util.getCurrentlyReadingBooks();
-        final ArrayList<book> wbook = util.getWantToReadBooks();
-        final ArrayList<book> abook = util.getAlreadyReadBooks();
+
+        ArrayList<book> books = Utility.getAllBooks();
+        final ArrayList<book> cbook =Utility.getCurrentlyReadingBooks();
+        final ArrayList<book> wbook =Utility.getWantToReadBooks();
+        final ArrayList<book> abook =Utility.getAlreadyReadBooks();
 
 
         for (book b : books) {
@@ -96,7 +100,8 @@ public class BookdscrpActivity extends AppCompatActivity {
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            util.addwantToReadBooks(c);
+                            Utility.addwantToReadBooks(c);
+                            sqLite.insert(db,"wantToReadBooks",c.getId());
                             Toast.makeText(BookdscrpActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -137,8 +142,10 @@ public class BookdscrpActivity extends AppCompatActivity {
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.addCurrentlyReadingBooks(c);
-                                util.removewantToReadBooks(c);
+                                Utility.addCurrentlyReadingBooks(c);
+                                Utility.removewantToReadBooks(c);
+                                sqLite.insert(db,"currentlyReadingBooks",c.getId());
+                                sqLite.delete(db,"wantToReadBooks",c.getId());
                                 Toast.makeText(BookdscrpActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -157,8 +164,10 @@ public class BookdscrpActivity extends AppCompatActivity {
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.addCurrentlyReadingBooks(c);
-
+                                Utility.addCurrentlyReadingBooks(c);
+                                Utility.removealreadyReadBooks(c);
+                                sqLite.delete(db,"alreadyReadBook",c.getId());
+                                sqLite.insert(db,"currentlyReadingBooks",c.getId());
                                 Toast.makeText(BookdscrpActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -178,7 +187,8 @@ public class BookdscrpActivity extends AppCompatActivity {
                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.addCurrentlyReadingBooks(c);
+                                Utility.addCurrentlyReadingBooks(c);
+                                sqLite.insert(db,"currentlyReadingBooks",c.getId());
                                 Toast.makeText(BookdscrpActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -220,9 +230,10 @@ public class BookdscrpActivity extends AppCompatActivity {
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.removecurrentlyReadingBooks(c);
-                                util.addalreadyReadBooks(c);
-
+                                Utility.removecurrentlyReadingBooks(c);
+                                Utility.addalreadyReadBooks(c);
+                                sqLite.insert(db,"alreadyReadBook",c.getId());
+                                sqLite.delete(db,"currentlyReadingBooks",c.getId());
                                 Toast.makeText(BookdscrpActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -240,7 +251,8 @@ public class BookdscrpActivity extends AppCompatActivity {
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.addalreadyReadBooks(c);
+                                Utility.addalreadyReadBooks(c);
+                                sqLite.insert(db,"alreadyReadBook",c.getId());
                                 Toast.makeText(BookdscrpActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                             }
                         });

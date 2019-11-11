@@ -20,9 +20,7 @@ public class Bookcurrentlyreading extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recylvu);
 
-        Utility util = new Utility();
-
-        ArrayList<book> books = util.getCurrentlyReadingBooks();
+        ArrayList<book> books = Utility.getCurrentlyReadingBooks();
 
         BookAdpater adpater = new BookAdpater(this, books);
         adpater.setType("current");

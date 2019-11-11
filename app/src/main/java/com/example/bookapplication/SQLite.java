@@ -1,72 +1,40 @@
 package com.example.bookapplication;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
+import androidx.annotation.Nullable;
 
-public class Utility {
+public class SQLite extends SQLiteOpenHelper {
 
-    private static ArrayList<book> currentlyReadingBooks;
-    private static ArrayList<book> wantToReadBooks;
-    private static ArrayList<book> AllBooks;
-    private static ArrayList<book> alreadyReadBooks;
+    private final static int DATABASE_VERSION=1;
+    private final static String DATABASE_NAME="Books";
 
-    public static Context context;
-    private static SQLite sqLite;
-    private static SQLiteDatabase db;
-
-    private static int id = 0;
-
-//    public Utility() {
-//        if (currentlyReadingBooks == null) {
-//            currentlyReadingBooks = new ArrayList<book>();
-//        }
-//        if (wantToReadBooks == null) {
-//            wantToReadBooks = new ArrayList<book>();
-//        }
-//        if (alreadyReadBooks == null) {
-//            alreadyReadBooks = new ArrayList<book>();
-//        }
-//        if (AllBooks == null) {
-//            AllBooks = new ArrayList<book>();
-//
-//            //initializeAllBooks();
-//        }
-//    }
-
-    public static void initalizeDATABASE(){
-        sqLite=new SQLite(context);
-        db=sqLite.getReadableDatabase();
+    public SQLite(@Nullable Context context) {
+        super(context, DATABASE_NAME,null,DATABASE_VERSION);
     }
 
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String sqlTable0= "CREATE TABLE AllBooks (_id integer Primary Key Autoincrement ,name text, imgurl text, pages text, description text, price double, author text)";
+        db.execSQL(sqlTable0);
 
-    public static SQLite getSqLite() {
-        return sqLite;
+        String sqlTable1= "CREATE TABLE currentlyReadingBooks (_id integer Primary Key Autoincrement ,name text, imgurl text, pages text, description text, price double, author text)";
+        db.execSQL(sqlTable1);
+
+        String sqlTable2= "CREATE TABLE wantToReadBooks (_id integer Primary Key Autoincrement ,name text, imgurl text, pages text, description text, price double, author text)";
+        db.execSQL(sqlTable2);
+
+        String sqlTable3= "CREATE TABLE alreadyReadBook (_id integer Primary Key Autoincrement ,name text, imgurl text, pages text, description text, price double, author text)";
+        db.execSQL(sqlTable3);
+
+        initiateDATA(db);
     }
 
-    public static SQLiteDatabase getDb() {
-        return db;
-    }
-
-    public static void setCurrentlyReadingBooks(ArrayList<book> currentlyReadingBooks) {
-        Utility.currentlyReadingBooks = currentlyReadingBooks;
-    }
-
-    public static void setWantToReadBooks(ArrayList<book> wantToReadBooks) {
-        Utility.wantToReadBooks = wantToReadBooks;
-    }
-
-    public static void setAllBooks(ArrayList<book> allBooks) {
-        AllBooks = allBooks;
-    }
-
-    public static void setAlreadyReadBooks(ArrayList<book> alreadyReadBooks) {
-        Utility.alreadyReadBooks = alreadyReadBooks;
-    }
-
-    public static void initializeAllBooks() {
-
+    public void initiateDATA(SQLiteDatabase db){
 
         String name = "";
         String imgUrl = "";
@@ -75,7 +43,11 @@ public class Utility {
         Double price = 0.0;
         String author;
 
-        id++;
+
+
+
+
+        ContentValues contentValues0= new ContentValues();
         name = "1984";
         author = "George Orwell";
         pages = "1550";
@@ -87,10 +59,17 @@ public class Utility {
                 "and introduced Big Brother into our everyday vocabulary. Perhaps the " +
                 "mightiest of George Orwell’s works.";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues0.put("name",name);
+        contentValues0.put("imgurl",imgUrl);
+        contentValues0.put("author",author);
+        contentValues0.put("pages",pages);
+        contentValues0.put("description",description);
+        contentValues0.put("price",price);
+        db.insert("AllBooks",null,contentValues0);
 
 
-        id++;
+
+        ContentValues contentValues1= new ContentValues();
         name = "The Adventures of Huckleberry Finn";
         author = "Mark Twain";
         pages = "1750";
@@ -101,10 +80,17 @@ public class Utility {
                 "River for a guide. This slender book by Mark Twain’s is so " +
                 "well-regarded that it’s said by many to be The Great American Novel. ";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues1.put("name",name);
+        contentValues1.put("imgurl",imgUrl);
+        contentValues1.put("author",author);
+        contentValues1.put("pages",pages);
+        contentValues1.put("description",description);
+        contentValues1.put("price",price);
+        db.insert("AllBooks",null,contentValues1);
 
 
-        id++;
+
+        ContentValues contentValues2= new ContentValues();
         name = " The Adventures of Sherlock Holmes";
         author = "Arthur Conan Doyle";
         pages = "1850";
@@ -115,11 +101,17 @@ public class Utility {
                 "feature Sherlock Holmes. Sharp and engrossing, this " +
                 "collection shows how exactly Sherlock Holmes became a cultural " +
                 "phenomenon and the most recognizable detective of all time.";
+        contentValues2.put("name",name);
+        contentValues2.put("imgurl",imgUrl);
+        contentValues2.put("author",author);
+        contentValues2.put("pages",pages);
+        contentValues2.put("description",description);
+        contentValues2.put("price",price);
+        db.insert("AllBooks",null,contentValues2);
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
 
 
-        id++;
+        ContentValues contentValues3= new ContentValues();
         name = " The Alchemist";
         author = "Paulo Coelho";
         pages = "1950";
@@ -130,10 +122,18 @@ public class Utility {
                 " worldwide — and the magical story of Santiago’s journey " +
                 "to the pyramids of Egypt continues to enchant readers worldwide. A dreamy triumph. ";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues3.put("name",name);
+        contentValues3.put("imgurl",imgUrl);
+        contentValues3.put("author",author);
+        contentValues3.put("pages",pages);
+        contentValues3.put("description",description);
+        contentValues3.put("price",price);
+        db.insert("AllBooks",null,contentValues3);
 
 
-        id++;
+
+
+        ContentValues contentValues4= new ContentValues();
         name = "  The Aleph and Other Stories ";
         author = "Jorge Luis Borges";
         pages = "2050";
@@ -145,10 +145,18 @@ public class Utility {
                 "the stories within are glittering, haunting examples of worlds " +
                 "created by a master of magic realism. ";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues4.put("name",name);
+        contentValues4.put("imgurl",imgUrl);
+        contentValues4.put("author",author);
+        contentValues4.put("pages",pages);
+        contentValues4.put("description",description);
+        contentValues4.put("price",price);
+        db.insert("AllBooks",null,contentValues4);
 
 
-        id++;
+
+
+        ContentValues contentValues5= new ContentValues();
         name = "  Animal Farm  ";
         author = "George Orwell";
         pages = "2150";
@@ -162,10 +170,18 @@ public class Utility {
                 "achievement, and not just because Orwell proved that a story " +
                 "about pigs can be terrifying. ";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues5.put("name",name);
+        contentValues5.put("imgurl",imgUrl);
+        contentValues5.put("author",author);
+        contentValues5.put("pages",pages);
+        contentValues5.put("description",description);
+        contentValues5.put("price",price);
+        db.insert("AllBooks",null,contentValues5);
 
 
-        id++;
+
+
+        ContentValues contentValues6= new ContentValues();
         name = "  Aesop’s Fables ";
         author = "Aesop";
         pages = "2250";
@@ -175,10 +191,18 @@ public class Utility {
                 "down through oral tradition more than two millennia " +
                 "ago. More than simple stories, Aesop’s stories reflect every aspect of human nature.";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues6.put("name",name);
+        contentValues6.put("imgurl",imgUrl);
+        contentValues6.put("author",author);
+        contentValues6.put("pages",pages);
+        contentValues6.put("description",description);
+        contentValues6.put("price",price);
+        db.insert("AllBooks",null,contentValues6);
 
 
-        id++;
+
+
+        ContentValues contentValues7= new ContentValues();
         name = " Alice’s Adventures in Wonderland";
         author = "Lewis Carroll";
         pages = "2350";
@@ -191,10 +215,18 @@ public class Utility {
                 "in 1865, sending it down the rabbit hole and straight into the " +
                 "hallowed halls of children’s most treasured literature.";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues7.put("name",name);
+        contentValues7.put("imgurl",imgUrl);
+        contentValues7.put("author",author);
+        contentValues7.put("pages",pages);
+        contentValues7.put("description",description);
+        contentValues7.put("price",price);
+        db.insert("AllBooks",null,contentValues7);
 
 
-        id++;
+
+
+        ContentValues contentValues8= new ContentValues();
         name = "  Anna Karenina";
         author = "Leo Tolstoy";
         pages = "2450";
@@ -206,10 +238,18 @@ public class Utility {
                 "of 800+ pages — dealing with social change, politics, theology," +
                 " and philosophy in nineteenth-century Russia all the while.";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues8.put("name",name);
+        contentValues8.put("imgurl",imgUrl);
+        contentValues8.put("author",author);
+        contentValues8.put("pages",pages);
+        contentValues8.put("description",description);
+        contentValues8.put("price",price);
+        db.insert("AllBooks",null,contentValues8);
 
 
-        id++;
+
+
+        ContentValues contentValues9= new ContentValues();
         name = "  Anne of the Green Gables";
         author = " L.M. Montgomery";
         pages = "2550";
@@ -221,57 +261,42 @@ public class Utility {
                 "arcs to the occasional drunken episode, this beloved classic by " +
                 "L.M. Montgomery has it all: laughs, pain, and heart. ";
 
-        AllBooks.add(new book(name, imgUrl, pages, description, price, author, id));
+        contentValues9.put("name",name);
+        contentValues9.put("imgurl",imgUrl);
+        contentValues9.put("author",author);
+        contentValues9.put("pages",pages);
+        contentValues9.put("description",description);
+        contentValues9.put("price",price);
+        db.insert("AllBooks",null,contentValues9);
 
 
     }
 
-    public static ArrayList<book> getCurrentlyReadingBooks() {
-        return currentlyReadingBooks;
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
     }
 
-    public static ArrayList<book> getWantToReadBooks() {
-        return wantToReadBooks;
+    public void insert(SQLiteDatabase db, String tableName, int ID){
+
+        Cursor cursor=db.query("AllBooks",null,
+                       "_id=?",new String[]{String.valueOf(ID)},null,null,null);
+
+        if (cursor.moveToFirst()){
+            ContentValues contentValues=new ContentValues();
+            contentValues.put("_id",Integer.valueOf(cursor.getString(0)));
+            contentValues.put("name",cursor.getString(1));
+            contentValues.put("imgurl",cursor.getString(2));
+            contentValues.put("author",cursor.getString(6));
+            contentValues.put("pages",cursor.getString(3));
+            contentValues.put("description",cursor.getString(4));
+            contentValues.put("price",cursor.getString(5));
+            db.insert(tableName,null,contentValues);
+        }
+
     }
 
-    public static ArrayList<book> getAllBooks() {
-        return AllBooks;
+    public void delete(SQLiteDatabase db, String tableName, int ID){
+        db.delete(tableName,"_id=?",new String[]{String.valueOf(ID)});
     }
-
-    public static ArrayList<book> getAlreadyReadBooks() {
-        return alreadyReadBooks;
-    }
-
-    public static Boolean addCurrentlyReadingBooks(book b) {
-        return currentlyReadingBooks.add(b);
-    }
-
-    public static Boolean addalreadyReadBooks(book b) {
-        return alreadyReadBooks.add(b);
-    }
-
-    public static Boolean addwantToReadBooks(book b) {
-        return wantToReadBooks.add(b);
-    }
-
-    public static Boolean addAllBooks(book b) {
-        return AllBooks.add(b);
-    }
-
-    public static Boolean removeAllBooks(book e) {
-        return AllBooks.remove(e);
-    }
-
-    public static Boolean removecurrentlyReadingBooks(book e) {
-        return currentlyReadingBooks.remove(e);
-    }
-
-    public static Boolean removewantToReadBooks(book e) {
-        return wantToReadBooks.remove(e);
-    }
-
-    public static Boolean removealreadyReadBooks(book e) {
-        return alreadyReadBooks.remove(e);
-    }
-
 }

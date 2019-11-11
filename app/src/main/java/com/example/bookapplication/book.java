@@ -1,6 +1,7 @@
 package com.example.bookapplication;
 
 public class book {
+    private int id;
     private String Name;
     private String ImgUrl;
     private String pages;
@@ -8,7 +9,8 @@ public class book {
     private Double price;
     private String author;
 
-    private int id;
+
+    public book(){}
 
 
     public book(String name, String imgUrl, String pages, String description, Double price, String author, int id) {

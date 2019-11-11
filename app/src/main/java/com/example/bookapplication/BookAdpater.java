@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,9 @@ public class BookAdpater extends RecyclerView.Adapter<BookAdpater.ViewHolder> {
 
     private Context context;
     private String type;
-    private Utility util = new Utility();
+
+    private SQLite sqLite=Utility.getSqLite();
+    private SQLiteDatabase db=Utility.getDb();
 
     public void setType(String type) {
         this.type = type;
@@ -76,7 +79,8 @@ public class BookAdpater extends RecyclerView.Adapter<BookAdpater.ViewHolder> {
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.removewantToReadBooks(books.get(position));
+                                Utility.removewantToReadBooks(books.get(position));
+                                sqLite.delete(db,"wantToReadBooks",books.get(position).getId());
                                 notifyDataSetChanged();
                                 Toast.makeText(context, name + " is deleted", Toast.LENGTH_SHORT).show();
                             }
@@ -86,7 +90,8 @@ public class BookAdpater extends RecyclerView.Adapter<BookAdpater.ViewHolder> {
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.removecurrentlyReadingBooks(books.get(position));
+                                Utility.removecurrentlyReadingBooks(books.get(position));
+                                sqLite.delete(db,"currentlyReadingBooks",books.get(position).getId());
                                 notifyDataSetChanged();
                                 Toast.makeText(context, name + " is deleted", Toast.LENGTH_SHORT).show();
                             }
@@ -96,7 +101,8 @@ public class BookAdpater extends RecyclerView.Adapter<BookAdpater.ViewHolder> {
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                util.removealreadyReadBooks(books.get(position));
+                                Utility.removealreadyReadBooks(books.get(position));
+                                sqLite.delete(db,"alreadyReadBook",books.get(position).getId());
                                 notifyDataSetChanged();
                                 Toast.makeText(context, name + " is deleted", Toast.LENGTH_SHORT).show();
                             }

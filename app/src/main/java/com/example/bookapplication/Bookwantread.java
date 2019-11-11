@@ -20,8 +20,7 @@ public class Bookwantread extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.reclvu);
 
-        Utility util = new Utility();
-        ArrayList<book> books = util.getWantToReadBooks();
+        ArrayList<book> books = Utility.getWantToReadBooks();
 
         BookAdpater adpater = new BookAdpater(this, books);
         adpater.setType("want");
