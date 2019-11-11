@@ -74,13 +74,14 @@ public class BookAdpater extends RecyclerView.Adapter<BookAdpater.ViewHolder> {
                     }
                 });
 
+                final int id=books.get(position).getId();
                 switch (type) {
                     case "want":
                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Utility.removewantToReadBooks(books.get(position));
-                                sqLite.delete(db,"wantToReadBooks",books.get(position).getId());
+                                sqLite.delete(db,"wantToReadBooks",id);
                                 notifyDataSetChanged();
                                 Toast.makeText(context, name + " is deleted", Toast.LENGTH_SHORT).show();
                             }
@@ -91,7 +92,7 @@ public class BookAdpater extends RecyclerView.Adapter<BookAdpater.ViewHolder> {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Utility.removecurrentlyReadingBooks(books.get(position));
-                                sqLite.delete(db,"currentlyReadingBooks",books.get(position).getId());
+                                sqLite.delete(db,"currentlyReadingBooks",id);
                                 notifyDataSetChanged();
                                 Toast.makeText(context, name + " is deleted", Toast.LENGTH_SHORT).show();
                             }
@@ -102,7 +103,7 @@ public class BookAdpater extends RecyclerView.Adapter<BookAdpater.ViewHolder> {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Utility.removealreadyReadBooks(books.get(position));
-                                sqLite.delete(db,"alreadyReadBook",books.get(position).getId());
+                                sqLite.delete(db,"alreadyReadBook",id);
                                 notifyDataSetChanged();
                                 Toast.makeText(context, name + " is deleted", Toast.LENGTH_SHORT).show();
                             }

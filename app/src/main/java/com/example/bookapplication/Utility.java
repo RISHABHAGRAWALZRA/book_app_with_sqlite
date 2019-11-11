@@ -16,7 +16,7 @@ public class Utility {
     private static SQLite sqLite;
     private static SQLiteDatabase db;
 
-    private static int id = 0;
+    public static int id = 0;
 
 //    public Utility() {
 //        if (currentlyReadingBooks == null) {

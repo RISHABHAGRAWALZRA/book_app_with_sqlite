@@ -58,7 +58,7 @@ public class SQLite extends SQLiteOpenHelper {
                 "This is the book that became a standard-bearer for dystopian fiction " +
                 "and introduced Big Brother into our everyday vocabulary. Perhaps the " +
                 "mightiest of George Orwell’s works.";
-
+        //contentValues0.put("_id",0);
         contentValues0.put("name",name);
         contentValues0.put("imgurl",imgUrl);
         contentValues0.put("author",author);

@@ -37,6 +37,7 @@ public class book {
 
     public void setId(int id) {
         this.id = id;
+        Utility.id++;
     }
 
     public String getName() {

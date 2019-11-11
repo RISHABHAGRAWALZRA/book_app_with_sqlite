@@ -1,5 +1,6 @@
 package com.example.bookapplication;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,14 +9,18 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddBookdialog.addNewBook {
 
     Button btnsrh, btn1, btn2, btn3;
     TextView txtara;
@@ -28,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     Cursor cursor3;
 
 
+    @Override
+    public void onAdd() {
+        DatabaseAsyncTask databaseAsyncTask=new DatabaseAsyncTask();
+        databaseAsyncTask.execute();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +92,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+
+            case R.id.addBook:
+                AddBookdialog addBookdialog=new AddBookdialog();
+                addBookdialog.show(getSupportFragmentManager(),"addBookDialog");
+                return true;
+            default:
+                break;
+        }
+
+
+        return true;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -92,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         cursor3.close();
 
     }
+
+
 
     public class DatabaseAsyncTask extends AsyncTask<Void,Void,String>{
 
