@@ -22,7 +22,7 @@
         <activity android:name=".BooksSrch"
             android:label="All books"/>
         <activity android:name=".MainActivity"
-            android:label="Main">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Books App</string>
+    <string name="app_name">Books Management</string>
     <string name="name">name</string>
     <string name="email">email</string>
     <string name="description">description</string>
